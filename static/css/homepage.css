@@ -1,0 +1,112 @@
+.topnav {
+    overflow: hidden;
+    background-color: #424874;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #a6b1e1;
+    color: white;
+}
+
+.topnav a.active:hover {
+    opacity: 80%;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url("mart.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+     background-size: cover;
+}
+
+
+h1 {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:200%;
+    font-weight: bold;
+    color: #221c1c;
+    border: 8px solid white;
+    border-style: groove;
+    border-radius: 16px;
+    padding: 2%;
+    width: 40%;
+    margin: auto;
+    margin-top: 1%;
+    color:white;
+    display:block;
+    background-image: linear-gradient(#C33764,#1D2671);
+}
+
+h2 {
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 150%;
+  color: #f2f2f2;
+  padding: 2%;
+  width: 50%;
+  margin: auto;
+  
+}
+
+div {
+    text-align: center;
+    font-size: large;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 1%;
+    padding: 2%;
+}
+
+footer{
+    position:relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding:0.4% 0 0.4% 0;
+    background-color: #424874;
+    color: whitesmoke;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.button{
+    border: 1px solid black;
+    padding: 1%;
+    font-size: x-large;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    display: block;
+    width: 40%;
+    margin: auto;
+    margin-bottom: 1%;
+    border-radius: 7px;
+}
+.button:hover {
+    background-color: rgb(180, 180, 180);
+    color: black;
+}
+footer{
+    position:bottom
+}

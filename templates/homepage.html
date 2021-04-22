@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Adminpage</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/homepage.css">
+    </head>
+    <body>
+        <nav class="topnav">
+            <a class = "active" href="/">Sign Out</a>
+        </nav>
+        <h1 >XYZ MART</h1><br>
+        <div>
+            <a class="button" href="{{ url_for('add_book') }}">Add items</a>
+            <a class="button" href="{{ url_for('delete_book') }}">Delete Items</a>
+            <a class="button" href="{{ url_for('return_book') }}">Catalogue</a>
+            <a class="button" href="{{ url_for('display', title='Books') }}">Invoice Generation</a>
+            <a class="button" href="{{ url_for('issue_book') }}">Sales Report</a>
+        </div>
+        <footer>
+            <p>Developed by: Piyush and Vishal</p>
+        </footer>
+    </body>
+</html>
