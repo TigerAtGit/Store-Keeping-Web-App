@@ -1,0 +1,167 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add item</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<style>
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        border-right: 1px solid #f2f2f2;
+        border-left: 1px solid #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .topnav a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .col-md-4 col-md-offset-4{
+        text-align:center;
+    }
+        
+    form{
+        border:4px solid black;
+        padding:10px 10px 10px 10px;
+        background-color: black;
+    }
+        
+    form label{
+        text-align:left;
+        color:white;
+    }
+        
+    body{
+        background-color:whitesmoke;
+    }
+        
+    h2{
+        color:black;
+    }
+        
+    .required{
+        color: red;
+    }
+
+    .option-css{
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: 700;
+    }
+
+    .select-css {
+        display: block;
+        font-size: 16px;
+        font-family: sans-serif;
+        font-weight: 700;
+        color: #444;
+        line-height: 1.3;
+        padding: .6em 1.4em .5em .8em;
+        width: 70%;
+        max-width: 100%; /* useful when width is set to anything other than 100% */
+        box-sizing: border-box;
+        margin: 0;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+        border-radius: .5em;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+        linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;
+    }
+    
+    .select-css::-ms-expand {
+        display: none;
+    }
+
+    .select-css:hover {
+        border-color: #888;
+    }
+</style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a class = "active" href="/homepage">Home</a>
+    </nav>
+    </nav>
+
+    <center>
+   
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Add new exhibitor!</h2>
+        <form method="POST" action="{{ url_for('additem') }}">
+           
+             <div class="mb-3">
+               <label for="exampleInputEmail1">Product name: <span class='required'>*</span> </label>
+               <input type="name" class="form-control" id="exampleInputName1" name="pname" placeholder="Enter product name" required>
+               <small id="emailHelp" class="form-text text-muted"></small>
+             </div>
+             <div class="mb-3">
+                <label for="exampleInputEmail1">Category: <span class='required'>*</span> </label>
+                <br>
+                <select class='select-css' name="category" required>
+                  <option class="option-css" value=""> Select Category of Product: </option>
+                  {% for category in categories %}
+                    <option class="option-css" value="{{ category[1] }}"> {{ category[0] }}. {{ category[1] }} </option>
+                  {% endfor %}
+                </select>
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+             <div class="mb-3">
+               <label for="exampleInputEmail1">Price: <span class='required'>*</span> </label>
+               <input type="float" class="form-control" id="exampleInputEmail1" name="price" placeholder="Enter product price" required>
+               <small id="emailHelp" class="form-text text-muted"></small>
+             </div>
+             <div class="mb-3">
+                <label for="exampleInputEmail1">Stock: <span class='required'>*</span> </label>
+                <input type="integer" class="form-control" id="exampleInputEmailexampleInputEmail1" name="stock" placeholder="Number of items in stock"  required>
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+             <div class="mb-3">
+                <label for="exampleInputEmail1">Description</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="desc" placeholder="Description"><br>
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+           
+           <button type="submit" class="btn btn-primary">Add</button>
+         </form>
+         <label for="Required" class="required">* Required</label>
+         
+         {% with messages = get_flashed_messages() %}  
+          {% if messages %}  
+            {% for message in messages %}
+              <h3 style="text-align: center; color: green;">{{ message }}</h3>
+              <a href="">See the updated Catelogue....</a>
+            {% endfor %}  
+          {% endif %}  
+         {% endwith %}
+       
+       </div>
+       </center>
+    
+</body>
+</html>

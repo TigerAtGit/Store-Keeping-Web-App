@@ -1,4 +1,7 @@
 import mysql.connector as mysql
+from datetime import datetime
+from datetime import datetime,date
+from datetime import timedelta
 
 class dbservices:
     def __init__(self):
@@ -17,11 +20,11 @@ class dbservices:
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Products` (
             `Id` INT NOT NULL AUTO_INCREMENT,
-            `Name` VARCHAR(40) NOT NULL,
+            `PName` VARCHAR(40) NOT NULL,
             `Category` VARCHAR(40) NOT NULL,
             `Price` FLOAT NOT NULL,
             `Stock` INT DEFAULT 0,
-            `Desc` TEXT DEFAULT NULL,
+            `Description` TEXT DEFAULT NULL,
             `Date` DATETIME NOT NULL,
             PRIMARY KEY(`Id`)
         ); ''')
@@ -53,6 +56,12 @@ class dbservices:
             FOREIGN KEY (`Product_Id`) REFERENCES Sales(`Bill_Id`) ON UPDATE CASCADE ON DELETE CASCADE
         ); ''')
 
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Category`(
+            `Id` INT NOT NULL AUTO_INCREMENT,
+            `Name` VARCHAR(20) NOT NULL,
+            PRIMARY KEY(`Id`)
+        );''')
+
         self.connector.commit()
 
     def add_record(self, table_name, input_data):
@@ -74,6 +83,15 @@ class dbservices:
         #Execute Query
         try:
             self.dbcursor.execute(add_query, input_data)
+            self.connector.commit()
+        except Exception as e:
+            print(e)
+
+    def delete_record(self, table_name, id):
+        delete_query = (f"DELETE FROM {table_name} WHERE Id = %(id)s")
+        print(delete_query)
+        try:
+            self.dbcursor.execute(delete_query, {'id': id})
             self.connector.commit()
         except Exception as e:
             print(e)

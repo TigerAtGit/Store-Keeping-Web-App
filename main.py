@@ -4,6 +4,7 @@ from datetime import datetime
 from datetime import timedelta
 
 app  = Flask(__name__)
+app.secret_key = "super_secret_key"
 
 db = dbservices()
 
@@ -24,3 +25,30 @@ def signinpage():
 @app.route('/homepage')
 def homepage():
     return render_template('homepage.html')
+
+@app.route('/additem', methods = ['POST', 'GET'])
+def additem():
+    if request.method == 'POST':
+        table = 'Products'
+        pname = request.form.get('pname')
+        category = request.form.get('category')
+        price = request.form.get('price')
+        stock = request.form.get('stock')
+        desc = request.form.get('desc')
+        date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        data = {'PName': pname, '`Category`': category, 'Price': price, 'Stock': stock, '`Description`': desc, '`Date`': date}
+        db.add_record(table, data)
+        flash('New item added :)')
+        return redirect('/additem')
+    else:
+        categories = db.fetch_column_data('Category', ['Id', '`Name`'])
+        return render_template('additem.html', categories = categories)
+
+@app.route('/deleteitem', methods = ['POST', 'GET'])
+def deleteitem():
+    if request.method == 'POST':
+        table = 'Products'
+        productid = request.form.get('productid')
+        db.delete_record(table, productid)
+        return render_template('deleteitem.html', text = 'Item deleted successfully!')
+    return render_template('deleteitem.html')
