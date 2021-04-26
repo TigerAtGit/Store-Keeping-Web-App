@@ -26,6 +26,19 @@ def signinpage():
 def homepage():
     return render_template('homepage.html')
 
+@app.route('/display', methods = ['POST', 'GET'])
+def display():
+    # if request.method == 'POST':
+    table = 'Products'
+
+    cat1 = db.fetch_item_records(table, 'category 1')
+    cat2 = db.fetch_item_records(table, 'category 2')
+    cat3 = db.fetch_item_records(table, 'category 3')
+    cat4 = db.fetch_item_records(table, 'category 4')
+
+    return render_template('display.html', record1=cat1, record2=cat2, record3=cat3, record4=cat4)
+    # return render_template('display.html')
+
 @app.route('/additem', methods = ['POST', 'GET'])
 def additem():
     if request.method == 'POST':

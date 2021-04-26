@@ -64,6 +64,23 @@ class dbservices:
 
         self.connector.commit()
 
+
+    def fetch_item_records(self, table_name, category):
+
+        try:
+            print(category)
+
+            select_query = (f'SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category=\'{category}\'')
+            print(select_query)
+            self.dbcursor.execute(select_query)
+            records = self.dbcursor.fetchall()
+        
+            print(records)
+            return records
+        except Exception as e:
+            print(e)
+
+
     def add_record(self, table_name, input_data):
         keys = list(input_data.keys())
         
