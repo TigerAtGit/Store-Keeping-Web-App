@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete item</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <style>
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            border-right: 1px solid #f2f2f2;
+            border-left: 1px solid #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .col-md-4 col-md-offset-4{
+            text-align:center;
+            margin: auto;
+            width: 50%;
+        }
+        form{
+            border:4px solid black;
+            padding:10px 10px 10px 10px;
+            background-color: black;
+            margin-top: 15%;
+        }
+        form label{
+            text-align:left;
+            color:white;
+        }
+        body{
+            background-color:whitesmoke;
+        }
+
+        h2{
+            color:rgb(255, 246, 246);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="topnav">
+        <a class = "active" href="/homepage">Homepage</a>
+    </nav>
+
+    <center>
+        <div class="col-md-4 col-md-offset-4">
+            <form id="form" method="POST" action="{{ url_for('deleteitem') }}">
+                <h2>Delete an Item</h2>
+            
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Enter Product Id:</label>
+                    <input type="integer" class="form-control" id="exampleInputName1" name="productid" placeholder="Enter product id">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+         </div>
+         {% if text %}
+            <h3 style="text-align: center; color: green;">{{ text }}</h3>
+            <a href="">See the updated country repository....</a>
+        {% endif %}
+    
+    </center>
+
+
+</body>
