@@ -24,21 +24,21 @@ def signinpage():
 
 @app.route('/homepage')
 def homepage():
-    return render_template('homepage.html')
+    if request.method == 'POST':
+        table1 = 'Sales'
+        db.sales_delete(table1)
+        return render_template('homepage.html')
 
 @app.route('/display', methods = ['POST', 'GET'])
 def display():
-    # if request.method == 'POST':
     table = 'Products'
-
     cat1 = db.fetch_item_records(table, 'category 1')
     cat2 = db.fetch_item_records(table, 'category 2')
     cat3 = db.fetch_item_records(table, 'category 3')
     cat4 = db.fetch_item_records(table, 'category 4')
 
     return render_template('display.html', record1=cat1, record2=cat2, record3=cat3, record4=cat4)
-    # return render_template('display.html')
-
+    
 @app.route('/additem', methods = ['POST', 'GET'])
 def additem():
     if request.method == 'POST':
@@ -65,3 +65,27 @@ def deleteitem():
         db.delete_record(table, productid)
         return render_template('deleteitem.html', text = 'Item deleted successfully!')
     return render_template('deleteitem.html')
+
+@app.route('/enter_bill_generate', methods = ['POST', 'GET'])
+def enter_bill_generate():
+    table = 'Sales'
+    db.sales_entering(table)
+    bill_det = db.bill_details(table)
+    return render_template('bill.html', rec='', rec2=bill_det)
+    
+
+@app.route('/bill_generate', methods = ['POST', 'GET'])
+def bill_generate():
+    if request.method == 'POST':
+        table1 = 'Sales'
+        table2 = 'Sales_mapping'
+        productid = request.form.get('productid')
+        quantity = request.form.get('quantity')
+        data1 = [int(productid), float(quantity)]
+        rec = db.sales_bill_id(table1, table2, data1)
+        bill_det = db.bill_details(table1)
+        db.sales_delete(table1)
+        
+        return render_template('bill.html', rec=rec, rec2=bill_det)
+    return render_template('bill.html')
+

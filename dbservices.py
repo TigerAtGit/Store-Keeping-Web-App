@@ -127,17 +127,97 @@ class dbservices:
         self.connector.commit()
 
 
+    
+    def sales_bill_id(self, table_name1, table_name2, val):
+        
+        try:
+            select_query2 = (f"SELECT Price FROM Products WHERE Id='{ val[0] }'")
+            self.dbcursor.execute(select_query2)
+            price = self.dbcursor.fetchall()
+            p = price[0][0]
+            p = p*val[1]
+            val.append(p)
+            
+            select_query3 = (f'SELECT Bill_id FROM {table_name1}')
+            self.dbcursor.execute(select_query3)
+            billid = self.dbcursor.fetchall()
+
+            curr_bill_id = billid[-1][0]
+            
+            select_query4 = (f"INSERT INTO {table_name2} VALUES('{curr_bill_id}', '{val[0]}', '{val[1]}', '{val[2]}') ")
+            self.dbcursor.execute(select_query4)
+            
+            select_query5 = (f"SELECT SUM(Amount) FROM {table_name2} WHERE Sale_Id='{curr_bill_id}'")
+            self.dbcursor.execute(select_query5)
+            total_amount = self.dbcursor.fetchone()
+            tm = total_amount[0]
+            
+            select_query6 = (f"UPDATE {table_name1} SET Amount={tm} WHERE Bill_Id='{curr_bill_id}'")
+            self.dbcursor.execute(select_query6)
+
+            select_query7 = (f"SELECT Sale_Id,PName,Qty,Amount FROM Products,{table_name2} WHERE Sale_Id='{curr_bill_id}' AND Product_Id=Id;")
+            self.dbcursor.execute(select_query7)
+            records = self.dbcursor.fetchall()
+            self.connector.commit()
+            
+            return records
+        except Exception as e:
+            print(e)
+
+    def sales_entering(self, table_name):
+        
+        try:
+            sales_date = datetime.now()
+            select_query = (f"INSERT INTO {table_name}( Sale_date, Amount) VALUES('{sales_date}','0')")
+            self.dbcursor.execute(select_query)
+            self.connector.commit()
+        except Exception as e:
+            print(e)
+            
+
+    def sales_delete(self, table_name):
+        
+        try:
+            select_query = (f"DELETE FROM {table_name} WHERE Amount='0'")
+            self.dbcursor.execute(select_query)
+            self.connector.commit()
+        except Exception as e:
+            print(e)
+
+
+    def bill_details(self, table_name):
+        try:
+            select_query3 = (f'SELECT Bill_id FROM {table_name}')
+            self.dbcursor.execute(select_query3)
+            billid = self.dbcursor.fetchall()
+
+            curr_bill_id = billid[-1][0]
+            
+            select_query = (f"SELECT COUNT(Bill_Id) FROM {table_name} ")
+            self.dbcursor.execute(select_query)
+            billno = self.dbcursor.fetchall()
+            billno1 = billno[0][0]
+            
+            select_query = (f"SELECT Amount,Sale_date FROM {table_name} WHERE Bill_Id='{curr_bill_id}'")
+            self.dbcursor.execute(select_query)
+            final_amount = self.dbcursor.fetchall()
+            final_amount1 = final_amount[0][0]
+            date = str(final_amount[0][1])
+            date = date.split(' ')
+            date = date[0]
+            lst =[date,final_amount1, billno1]
+            
+            return lst
+        except Exception as e:
+            print(e)
+        
     def fetch_item_records(self, table_name, category):
 
         try:
-            print(category)
-
             select_query = (f'SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category=\'{category}\'')
-            print(select_query)
             self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchall()
         
-            print(records)
             return records
         except Exception as e:
             print(e)

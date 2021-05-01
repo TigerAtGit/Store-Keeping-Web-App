@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/issue_ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <style>
+            .topnav {
+                background-color: #333;
+                overflow: hidden;
+            }
+
+            .topnav a {
+                float:left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .radio-container{
+                border-color: black;
+                font-size: 20px;
+                border: 4px solid black;
+                background-color: rgb(241, 185, 133);
+                text-align: center;
+                margin: auto;
+                width: 60%;
+            }
+            .radio-container label{
+                margin: 2%;
+                margin-left: 5%;
+            }
+            form{
+                border:4px solid black;
+                padding:10px 10px 10px 10px;
+                background-color: black;
+                border-radius: 10px;
+                padding: 5%;
+            }
+            td{
+                border-width: 0px;
+                padding-top: 10px;
+            }
+            form label{
+                text-align:left;
+                color:white;
+                border-width: 0px;
+            }
+            .BookDetails{
+                border: 1px solid black;
+                border-collapse: collapse;
+                margin: auto;
+                border-radius: 10px;
+                background-color: whitesmoke;
+            }
+            .heading{
+                padding: 10px;
+                border: 0px solid black;
+                text-align: center;
+            }
+            
+            
+        </style>
+    </head>
+    <body>
+        <nav class="topnav">
+            <a class = "active" href="/homepage">Admin Page</a>
+        </nav>
+        <br>
+        <center>
+            <div id="div1" class="col-md-4 col-md-offset-4">
+                <h2>Add Items</h2>
+                <form id="form1" method="POST" action="{{ url_for('bill_generate') }}" id="issue">
+                    <div class="mb-3">
+                        <table>
+                          <tr>
+                            <td style="padding-top: 20px;">
+                              <label for="productid">Product id&nbsp&nbsp </label>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" id="exampleInputEmailexampleInputEmail1" name="productid" placeholder="Enter Product Id" required>
+                            </td>
+                          </tr>
+              
+                          <tr>
+                            <td style="padding-top: 20px;">
+                                <label for="quantity">Quantity </label>
+                              </td>
+                              <td >
+                                  <input type="number" class="form-control" id="exampleInputEmailexampleInputEmail1" name="quantity" placeholder="Enter Quantity" required>
+                              </td>
+                          </tr>
+                          
+                        </table>
+                          
+                    </div>
+              
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+                {% if text %}
+                    <h3 style="text-align: center; color: green;">{{ text }}</h3>
+                {% endif %}
+            </div>
+            <div class="container" id="div3b">
+                <br>
+                <h3>Bill</h3>
+                <div class="table-responsive">
+                    <table class="BookDetails">
+                        <tr class="row1" >
+                            <th class="heading" colspan="4" style="font-size: large; padding-bottom: 0px;">E-MART BILL</th>
+                        </tr>
+                        <tr class="row1" >
+                            {% if rec2 %}
+                            <td class="heading" colspan="2" style="padding-bottom: 0px; padding-left: 0px; padding-right: 70px;">Bill No: {{ rec2[2] }}</th>
+                            <td class="heading" colspan="2" style="padding-bottom: 0px;">Date: {{ rec2[0] }}</th>
+                            {% endif %}
+                        </tr>
+                        <tr class="row1" >
+                            <th class="heading" colspan="4" style="padding: 0px;">----------------------------------------------------</th>
+                        </tr>
+                        <tr class="row1" style="padding-top: 0px;">
+                            <th class="heading">Sale ID</th>
+                            <th class="heading">Product Name</th>
+                            <th class="heading">Quantity</th>
+                            <th class="heading">Amount</th>
+                            
+                        </tr>
+
+                        {% for i in rec %}
+                        
+                        <tr class="row12">
+                            <td class="heading">{{ i[0] }}</td>
+                            <td class="heading">{{ i[1] }}</td>
+                            <td class="heading">{{ i[2] }}</td>
+                            <td class="heading">{{ i[3] }}</td>
+                            
+                        </tr>
+                        
+                        {% endfor %}
+
+                        <tr class="row1" >
+                            <th class="heading" colspan="4" style="padding: 0px;">----------------------------------------------------</th>
+                        </tr>
+                        
+                        <tr class="row1" >
+                            {% if rec2 %}
+                            <th class="heading" colspan="4" style="padding-top: 0px;">Total Amount:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                &nbsp&nbsp&nbsp&nbsp{{ rec2[1] }}</th>
+                            {% endif %}
+                        </tr>
+                        
+                    </table>
+                </div><br>
+                <form  method="POST" action="{{ url_for('homepage') }}" style="all:unset;">
+                <button type="submit" class="btn btn-primary">End Billing</button>
+                </form>
+                
+                <br>
+                <br>
+            </div>
+        </center>
+        
+    </body>
+    
+</html>
