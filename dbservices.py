@@ -1,3 +1,4 @@
+
 import mysql.connector as mysql
 from datetime import datetime
 from datetime import datetime,date
@@ -11,7 +12,7 @@ class dbservices:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
 
         self.dbcursor = self.connector.cursor()
         self.dbcursor.execute('USE Storekeeping')
@@ -90,12 +91,16 @@ class dbservices:
     def sales_bill_id(self, table_name1, table_name2, val):
         
         try:
-            select_query2 = (f"SELECT Price FROM Products WHERE Id='{ val[0] }'")
+            select_query1 = (f"UPDATE Products SET Stock=Stock-{ val[1] } WHERE Id='{ val[0] }'")
+            self.dbcursor.execute(select_query1)
+            
+            select_query2 = (f"SELECT Price,Category_Id FROM Products WHERE Id='{ val[0] }'")
             self.dbcursor.execute(select_query2)
             price = self.dbcursor.fetchall()
             p = price[0][0]
             p = p*val[1]
             val.append(p)
+            catid = price[0][1]
             
             select_query3 = (f'SELECT Bill_id FROM {table_name1}')
             self.dbcursor.execute(select_query3)
@@ -103,7 +108,7 @@ class dbservices:
 
             curr_bill_id = billid[-1][0]
             
-            select_query4 = (f"INSERT INTO {table_name2} VALUES('{curr_bill_id}', '{val[0]}', '{val[1]}', '{val[2]}') ")
+            select_query4 = (f"INSERT INTO {table_name2} VALUES('{curr_bill_id}', '{val[0]}','{catid}', '{val[1]}', '{val[2]}') ")
             self.dbcursor.execute(select_query4)
             
             select_query5 = (f"SELECT SUM(Amount) FROM {table_name2} WHERE Sale_Id='{curr_bill_id}'")
@@ -162,8 +167,8 @@ class dbservices:
             final_amount = self.dbcursor.fetchall()
             final_amount1 = final_amount[0][0]
             date = str(final_amount[0][1])
-            date = date.split(' ')
-            date = date[0]
+            # date = date.split(' ')
+            # date = date[0]
             lst =[date,final_amount1, billno1]
             
             return lst
