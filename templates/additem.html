@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <style>
     .topnav {
         overflow: hidden;
@@ -76,7 +76,7 @@
         line-height: 1.3;
         padding: .6em 1.4em .5em .8em;
         width: 70%;
-        max-width: 100%; /* useful when width is set to anything other than 100% */
+        max-width: 100%; 
         box-sizing: border-box;
         margin: 0;
         border: 1px solid #aaa;
@@ -105,13 +105,12 @@
 <body>
 
   <nav class="topnav">
-    <a class = "active" href="/homepage">Home</a>
-    </nav>
+    <a class = "active" href="{{ url_for('homepage') }}">Home</a>
     </nav>
 
     <center>
    
-        <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-4 col-md-offset-4">
             <h2>Add new exhibitor!</h2>
         <form method="POST" action="{{ url_for('additem') }}">
            
@@ -126,7 +125,7 @@
                 <select class='select-css' name="category" required>
                   <option class="option-css" value=""> Select Category of Product: </option>
                   {% for category in categories %}
-                    <option class="option-css" value="{{ category[1] }}"> {{ category[0] }}. {{ category[1] }} </option>
+                    <option class="option-css" value="{{ category[0] }}"> {{ category[1] }} </option>
                   {% endfor %}
                 </select>
                 <small id="emailHelp" class="form-text text-muted"></small>
@@ -155,13 +154,13 @@
           {% if messages %}  
             {% for message in messages %}
               <h3 style="text-align: center; color: green;">{{ message }}</h3>
-              <a href="">See the updated Catelogue....</a>
+              <a href="{{ url_for('display') }}">See the updated Catalogue....</a>
             {% endfor %}  
           {% endif %}  
          {% endwith %}
        
-       </div>
-       </center>
+      </div>
+    </center>
     
 </body>
 </html>

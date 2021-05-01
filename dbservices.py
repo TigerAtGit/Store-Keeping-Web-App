@@ -130,12 +130,14 @@ class dbservices:
     def sales_bill_id(self, table_name1, table_name2, val):
         
         try:
-            select_query2 = (f"SELECT Price FROM Products WHERE Id='{ val[0] }'")
+            select_query2 = (f"SELECT Price,Category_Id FROM Products WHERE Id='{ val[0] }'")
             self.dbcursor.execute(select_query2)
             price = self.dbcursor.fetchall()
             p = price[0][0]
             p = p*val[1]
             val.append(p)
+            catid = price[0][1]
+            print(catid)
             
             select_query3 = (f'SELECT Bill_id FROM {table_name1}')
             self.dbcursor.execute(select_query3)
@@ -143,7 +145,7 @@ class dbservices:
 
             curr_bill_id = billid[-1][0]
             
-            select_query4 = (f"INSERT INTO {table_name2} VALUES('{curr_bill_id}', '{val[0]}', '{val[1]}', '{val[2]}') ")
+            select_query4 = (f"INSERT INTO {table_name2} VALUES('{curr_bill_id}', '{val[0]}','{catid}', '{val[1]}', '{val[2]}') ")
             self.dbcursor.execute(select_query4)
             
             select_query5 = (f"SELECT SUM(Amount) FROM {table_name2} WHERE Sale_Id='{curr_bill_id}'")
