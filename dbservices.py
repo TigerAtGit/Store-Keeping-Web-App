@@ -11,22 +11,97 @@ class dbservices:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
         self.dbcursor.execute('USE Storekeeping')
 
     def create_table(self):
 
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Admin`(
+            `Id` INT NOT NULL AUTO_INCREMENT,
+            `Name` VARCHAR(40) NOT NULL,
+            `Username` VARCHAR(25) NOT NULL UNIQUE,
+            `Password` VARCHAR(15) NOT NULL,
+            PRIMARY KEY (`Id`)
+        ); ''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Category`(
+            `Id` INT NOT NULL AUTO_INCREMENT,
+            `Name` VARCHAR(30) NOT NULL UNIQUE,
+            PRIMARY KEY(`Id`)
+        );''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Grocery') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Grocery'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Packaged foods') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Packaged foods'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Dairy products') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Dairy products'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Bakery') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Bakery'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Beverages') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Beverages'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Cleaning and household') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Cleaning and household'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Personal care') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Personal care'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Clothing') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Clothing'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Footwear') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Footwear'
+            ) LIMIT 1;''')
+
+        self.dbcursor.execute('''INSERT INTO Category (Name)
+            SELECT * FROM (SELECT 'Stationary') AS tmp
+            WHERE NOT EXISTS (
+                SELECT Name FROM Category WHERE Name = 'Stationary'
+            ) LIMIT 1;''')
+
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Products` (
             `Id` INT NOT NULL AUTO_INCREMENT,
             `PName` VARCHAR(40) NOT NULL,
-            `Category` VARCHAR(40) NOT NULL,
+            `Category_Id` INT NOT NULL,
             `Price` FLOAT NOT NULL,
             `Stock` INT DEFAULT 0,
             `Description` TEXT DEFAULT NULL,
             `Date` DATETIME NOT NULL,
-            PRIMARY KEY(`Id`)
+            PRIMARY KEY(`Id`),
+            FOREIGN KEY (`Category_Id`) REFERENCES Category(`Id`) ON UPDATE CASCADE ON DELETE CASCADE
         ); ''')
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Sales`(
@@ -38,29 +113,16 @@ class dbservices:
 
         self.dbcursor.execute('''ALTER TABLE Sales AUTO_INCREMENT=11001;''')
 
-        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Admin`(
-            `Id` INT NOT NULL AUTO_INCREMENT,
-            `Name` VARCHAR(40) NOT NULL,
-            `Username` VARCHAR(25) NOT NULL UNIQUE,
-            `Password` VARCHAR(15) NOT NULL,
-            PRIMARY KEY (`Id`)
-        ); ''')
-
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Sales_mapping`(
             `Sale_Id` INT NOT NULL,
             `Product_Id` INT NOT NULL,
+            `Cat_Id` INT NOT NULL,
             `Qty` FLOAT DEFAULT NULL,
-            `Unit` INT DEFAULT NULL,
             `Amount` FLOAT NOT NULL,
-            FOREIGN KEY (`Sale_Id`) REFERENCES Products(Id) ON UPDATE CASCADE ON DELETE CASCADE,
-            FOREIGN KEY (`Product_Id`) REFERENCES Sales(`Bill_Id`) ON UPDATE CASCADE ON DELETE CASCADE
+            FOREIGN KEY (`Sale_Id`) REFERENCES Sales(`Bill_Id`) ON UPDATE CASCADE ON DELETE CASCADE,
+            FOREIGN KEY (`Product_Id`) REFERENCES Products(Id) ON UPDATE CASCADE ON DELETE CASCADE,
+            FOREIGN KEY (`Cat_Id`) REFERENCES Category(`Id`) ON UPDATE CASCADE ON DELETE CASCADE
         ); ''')
-
-        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Category`(
-            `Id` INT NOT NULL AUTO_INCREMENT,
-            `Name` VARCHAR(20) NOT NULL,
-            PRIMARY KEY(`Id`)
-        );''')
 
         self.connector.commit()
 
