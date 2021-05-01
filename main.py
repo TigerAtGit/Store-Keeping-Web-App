@@ -24,10 +24,9 @@ def signinpage():
 
 @app.route('/homepage')
 def homepage():
-    if request.method == 'POST':
-        table1 = 'Sales'
-        db.sales_delete(table1)
-        return render_template('homepage.html')
+    table1 = 'Sales'
+    db.sales_delete(table1)
+    return render_template('homepage.html')
 
 @app.route('/display', methods = ['POST', 'GET'])
 def display():
