@@ -1,3 +1,4 @@
+
 import mysql.connector as mysql
 from datetime import datetime
 from datetime import datetime,date
@@ -32,65 +33,24 @@ class dbservices:
             PRIMARY KEY(`Id`)
         );''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Grocery') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Grocery'
-            ) LIMIT 1;''')
+        try:
+            self.dbcursor.execute('''INSERT INTO Category (Name) 
+            VALUES ('Beverages');''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Packaged foods') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Packaged foods'
-            ) LIMIT 1;''')
+            self.dbcursor.execute('''INSERT INTO Category (Name) 
+            VALUES ('Cleaning and household');''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Dairy products') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Dairy products'
-            ) LIMIT 1;''')
+            self.dbcursor.execute('''INSERT INTO Category (Name) 
+            VALUES ('Grocery');''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Bakery') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Bakery'
-            ) LIMIT 1;''')
+            self.dbcursor.execute('''INSERT INTO Category (Name) 
+            VALUES ('Packaged foods');''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Beverages') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Beverages'
-            ) LIMIT 1;''')
+            self.dbcursor.execute('''INSERT INTO Category (Name) 
+            VALUES ('Personal care');''')
 
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Cleaning and household') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Cleaning and household'
-            ) LIMIT 1;''')
-
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Personal care') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Personal care'
-            ) LIMIT 1;''')
-
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Clothing') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Clothing'
-            ) LIMIT 1;''')
-
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Footwear') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Footwear'
-            ) LIMIT 1;''')
-
-        self.dbcursor.execute('''INSERT INTO Category (Name)
-            SELECT * FROM (SELECT 'Stationary') AS tmp
-            WHERE NOT EXISTS (
-                SELECT Name FROM Category WHERE Name = 'Stationary'
-            ) LIMIT 1;''')
+        except Exception as e:
+            pass
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Products` (
             `Id` INT NOT NULL AUTO_INCREMENT,
@@ -126,10 +86,14 @@ class dbservices:
 
         self.connector.commit()
 
+
     
     def sales_bill_id(self, table_name1, table_name2, val):
         
         try:
+            select_query1 = (f"UPDATE Products SET Stock=Stock-{ val[1] } WHERE Id='{ val[0] }'")
+            self.dbcursor.execute(select_query1)
+            
             select_query2 = (f"SELECT Price,Category_Id FROM Products WHERE Id='{ val[0] }'")
             self.dbcursor.execute(select_query2)
             price = self.dbcursor.fetchall()
@@ -137,7 +101,6 @@ class dbservices:
             p = p*val[1]
             val.append(p)
             catid = price[0][1]
-            print(catid)
             
             select_query3 = (f'SELECT Bill_id FROM {table_name1}')
             self.dbcursor.execute(select_query3)
@@ -204,8 +167,8 @@ class dbservices:
             final_amount = self.dbcursor.fetchall()
             final_amount1 = final_amount[0][0]
             date = str(final_amount[0][1])
-            date = date.split(' ')
-            date = date[0]
+            # date = date.split(' ')
+            # date = date[0]
             lst =[date,final_amount1, billno1]
             
             return lst
@@ -215,7 +178,7 @@ class dbservices:
     def fetch_item_records(self, table_name, category):
 
         try:
-            select_query = (f'SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category=\'{category}\'')
+            select_query = (f"SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category_Id = '{category}'")
             self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchall()
         
