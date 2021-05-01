@@ -48,7 +48,8 @@ h1 {
     padding: 2%;
     width: 40%;
     margin: auto;
-    margin-top: 1%;
+    margin-top: 2%;
+    margin-bottom: 4%;
     color:white;
     display:block;
     background-image: linear-gradient(#C33764,#1D2671);
@@ -68,10 +69,9 @@ h2 {
 
 div {
     text-align: center;
-    font-size: large;
+    font-size:x-large;
     width: 50%;
     margin: auto;
-    margin-bottom: 1%;
     padding: 2%;
 }
 
@@ -108,5 +108,14 @@ footer{
     color: black;
 }
 footer{
-    position:bottom
+    position:fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding:0.4% 0 0.4% 0;
+    background-image: linear-gradient(red, yellow);
+    color: rgb(165, 1, 1);
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
 }

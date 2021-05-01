@@ -50,6 +50,11 @@
       color: white;
     }
 
+    #el04 { /* Change width and height */
+        width:4em;
+        height:4em;
+    }
+
     .radio-container{
         border-color: black;
         font-size: 20px;
@@ -57,7 +62,7 @@
         background-color: rgb(241, 185, 133);
         text-align: center;
         margin: auto;
-        width: 60%;
+        width: 100%;
     }
     .radio-container label{
         margin: 2%;
@@ -69,25 +74,28 @@
   </head>
   <body>
     <div class="topnav">
-      <a href="">Home</a>
+      <a href="{{ url_for('homepage') }}">Home</a>
     </div>
     <div class="radio-container">
-        <label for="book">Category 1</label>
+        <label for="radio1">Beverages</label>
         <input type="radio" name="radio" value="radio1" checked/>
         
-        <label for="cd">Category 2</label>
+        <label for="radio2">Cleaning and Household</label>
         <input type="radio" name="radio" value="radio2"/>
         
-        <label for="cd">Category 3</label>
+        <label for="radio3">Grocery</label>
         <input type="radio" name="radio" value="radio3"/>
         
-        <label for="cd">Category 4</label>
+        <label for="radio4">Packaged foods</label>
         <input type="radio" name="radio" value="radio4"/>
+
+        <label for="radio5">Personal care</label>
+        <input type="radio" name="radio" value="radio5"/>
 
     </div><br>
     <center>
         <div id="cat1">
-            <h2 style="color: white;">Category 1 catalogue</h2>
+            <h2 style="color: white;">Beverages</h2>
             <div >
     
                 <table class="table table-hover" style='width: 700px;'>
@@ -102,7 +110,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for row in record1 %}
+                    {% for row in record[0] %}
                         <tr>
                         <th scope="row">{{ row[0] }}</th>
                         <td><b>{{ row[1] }}</b></td>
@@ -120,7 +128,7 @@
         </div>
 
         <div id="cat2">
-            <h2 style="color: white;">Category 2 catalogue</h2>
+            <h2 style="color: white;">Cleaning and Household</h2>
             <div >
     
                 <table class="table table-hover" style='width: 700px;'>
@@ -135,7 +143,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for row in record2 %}
+                    {% for row in record[1] %}
                         <tr>
                         <th scope="row">{{ row[0] }}</th>
                         <td><b>{{ row[1] }}</b></td>
@@ -153,7 +161,7 @@
         </div>
 
         <div id="cat3">
-            <h2 style="color: white;">Category 3 catalogue</h2>
+            <h2 style="color: white;">Grocery</h2>
             <div >
     
                 <table class="table table-hover" style='width: 700px;'>
@@ -168,7 +176,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for row in record3 %}
+                    {% for row in record[2] %}
                         <tr>
                         <th scope="row">{{ row[0] }}</th>
                         <td><b>{{ row[1] }}</b></td>
@@ -186,7 +194,7 @@
         </div>
 
         <div id="cat4">
-            <h2 style="color: white;">Category 4 catalogue</h2>
+            <h2 style="color: white;">Packaged foods</h2>
             <div >
     
                 <table class="table table-hover" style='width: 700px;'>
@@ -201,7 +209,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for row in record4 %}
+                    {% for row in record[3] %}
                         <tr>
                         <th scope="row">{{ row[0] }}</th>
                         <td><b>{{ row[1] }}</b></td>
@@ -217,7 +225,36 @@
     
             </div>
         </div>
-           
+        <div id="cat5">
+            <h2 style="color: white;">Personal care</h2>
+            <div >
+    
+                <table class="table table-hover" style='width: 700px;'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Name</b></th>
+                            <th scope="col"><b>Date</b></th>
+                            <th scope="col"><b>Stock</b></th>
+                            <th scope="col"><b>Description</b></th>
+                            <th scope="col"><b>Date</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in record[4] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>
+                        <td><b>{{ row[4] }}</b></td>
+                        <td><b>{{ row[5] }}</b></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </center>
 
     <script>
@@ -226,11 +263,13 @@
         var cat2 = document.getElementById("cat2");
         var cat3 = document.getElementById("cat3");
         var cat4 = document.getElementById("cat4");
-        
+        var cat5 = document.getElementById("cat5"); 
+
         cat1.style.display = 'block';
         cat2.style.display = 'none';
         cat3.style.display = 'none';
         cat4.style.display = 'none';
+        cat5.style.display = 'none';
 
         for(var i = 0; i < radios.length; i++) {
             radios[i].onclick = function() {
@@ -240,30 +279,39 @@
                     cat2.style.display = 'none';
                     cat3.style.display = 'none';
                     cat4.style.display = 'none';
+                    cat5.style.display = 'none';
                 }
                 else if(val == 'radio2'){
                     cat1.style.display = 'none';
                     cat2.style.display = 'block';
                     cat3.style.display = 'none';
                     cat4.style.display = 'none';
-
+                    cat5.style.display = 'none';
                 }   
                 else if(val == 'radio3'){
                     cat1.style.display = 'none';
                     cat2.style.display = 'none';
                     cat3.style.display = 'block';
                     cat4.style.display = 'none';
+                    cat5.style.display = 'none';
                 }
                 else if(val == 'radio4'){
                     cat1.style.display = 'none';
                     cat2.style.display = 'none';
                     cat3.style.display = 'none';
                     cat4.style.display = 'block';
+                    cat5.style.display = 'none';
+                }
+                else if(val == 'radio5'){
+                    cat1.style.display = 'none';
+                    cat2.style.display = 'none';
+                    cat3.style.display = 'none';
+                    cat4.style.display = 'none';
+                    cat5.style.display = 'block';
                 }
             }
         }
-
-        
+   
     </script>
  
 </body>

@@ -28,16 +28,7 @@ def homepage():
         table1 = 'Sales'
         db.sales_delete(table1)
         return render_template('homepage.html')
-
-@app.route('/display', methods = ['POST', 'GET'])
-def display():
-    table = 'Products'
-    cat1 = db.fetch_item_records(table, 'category 1')
-    cat2 = db.fetch_item_records(table, 'category 2')
-    cat3 = db.fetch_item_records(table, 'category 3')
-    cat4 = db.fetch_item_records(table, 'category 4')
-
-    return render_template('display.html', record1=cat1, record2=cat2, record3=cat3, record4=cat4)
+    return render_template('homepage.html')
     
 @app.route('/additem', methods = ['POST', 'GET'])
 def additem():
@@ -49,7 +40,7 @@ def additem():
         stock = request.form.get('stock')
         desc = request.form.get('desc')
         date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        data = {'PName': pname, '`Category`': category, 'Price': price, 'Stock': stock, '`Description`': desc, '`Date`': date}
+        data = {'PName': pname, '`Category_Id`': category, 'Price': price, 'Stock': stock, '`Description`': desc, '`Date`': date}
         db.add_record(table, data)
         flash('New item added :)')
         return redirect('/additem')
@@ -65,6 +56,14 @@ def deleteitem():
         db.delete_record(table, productid)
         return render_template('deleteitem.html', text = 'Item deleted successfully!')
     return render_template('deleteitem.html')
+
+@app.route('/display', methods = ['POST', 'GET'])
+def display():
+    table = 'Products'
+    cat = []
+    for i in range(1, 6):
+        cat.append(db.fetch_item_records(table, i)) 
+    return render_template('display.html', record = list(cat))
 
 @app.route('/enter_bill_generate', methods = ['POST', 'GET'])
 def enter_bill_generate():

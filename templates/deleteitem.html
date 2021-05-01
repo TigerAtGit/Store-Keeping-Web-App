@@ -60,7 +60,7 @@
 </head>
 <body>
     <nav class="topnav">
-        <a class = "active" href="/homepage">Homepage</a>
+        <a class = "active" href="{{ url_for('homepage') }}">Homepage</a>
     </nav>
 
     <center>
@@ -78,7 +78,7 @@
          </div>
          {% if text %}
             <h3 style="text-align: center; color: green;">{{ text }}</h3>
-            <a href="">See the updated country repository....</a>
+            <a href="">See the updated catalogue....</a>
         {% endif %}
     
     </center>
