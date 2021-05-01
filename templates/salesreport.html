@@ -1,120 +1,293 @@
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Sales report</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
-      <style>
-          body{
-              background-size: cover; 
-              box-sizing: border-box; 
-              background-image: linear-gradient(180deg, rgba(0, 30, 53, 0.75), rgba(0, 30, 53, 0.75)), url('static/image/allback.jpg');
-          }
+  <style>
 
-          table {
-              width: 100%;
-              border-collapse: collapse;
-              border: 3px solid white;
-          }
+    body{
+      background-size: cover; 
+      box-sizing: border-box; 
+      background-image: linear-gradient(180deg, rgba(0, 30, 53, 0.75), rgba(0, 30, 53, 0.75)), url('static/image/allback.jpg');
+    }
 
-          .topnav {
-              background-color: #333;
-              overflow: hidden;
-          }
+    h2{
+        text-align: center;
+        color: azure;
+    }
 
-          .topnav a {
-              float:left;
-              color: #f2f2f2;
-              text-align: center;
-              padding: 14px 16px;
-              text-decoration: none;
-              font-size: 17px;
-          }
+    table {
+      
+      width: 100%;
+      border-collapse: collapse;
+      border: 3px solid white;
+    }
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #333;
+      overflow: hidden;
+    }
 
-          .topnav a:hover {
-              background-color: #ddd;
-              color: black;
-          }
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float:left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
 
-          .topnav a.active {
-              background-color: #4CAF50;
-              color: white;
-          }
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
 
-          #myInput {
-              background-image: url('/css/searchicon.png'); 
-              background-position: 10px 12px; 
-              background-repeat: no-repeat; 
-              margin: auto;
-              width: 50%; 
-              font-size: 16px; 
-              padding: 12px 20px 12px 40px; 
-              border: 1px solid #ddd; 
-              margin-top: 10px;
-              margin-bottom: 12px;
-          }
-      </style>
-    </head>
-    <body>
-        <div class="topnav">
-            <a href="/homepage">Admin Page</a>
-        </div>
-        <center>
-            <input type="text" id="myInput" onkeyup="SearchFunction()" placeholder="Search for item"> 
-            <h2 style="color: white;">Sales report</h2>
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .radio-container{
+        border-color: black;
+        font-size: 20px;
+        border: 4px solid black;
+        background-color: rgb(241, 185, 133);
+        text-align: center;
+        margin: auto;
+        width: 100%;
+    }
+    .radio-container label{
+        margin: 2%;
+        margin-left: 5%;
+    }
+
+  </style>
+  
+  </head>
+  <body>
+    <div class="topnav">
+      <a href="{{ url_for('homepage') }}">Home</a>
+    </div>
+    <h2>Sales report of various categories</h2>
+    <div class="radio-container">
+        <label for="radio1">Beverages</label>
+        <input type="radio" name="radio" value="radio1" checked/>
+        
+        <label for="radio2">Cleaning and Household</label>
+        <input type="radio" name="radio" value="radio2"/>
+        
+        <label for="radio3">Grocery</label>
+        <input type="radio" name="radio" value="radio3"/>
+        
+        <label for="radio4">Packaged foods</label>
+        <input type="radio" name="radio" value="radio4"/>
+
+        <label for="radio5">Personal care</label>
+        <input type="radio" name="radio" value="radio5"/>
+
+    </div><br>
+    <center>
+        <div id="cat1">
+            <h2 style="color: white;">Beverages</h2>
             <div >
-                <table id="myTable" class="table table-hover" style='width: 700px;'>
+    
+                <table class="table table-hover" style='width: 700px;'>
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col"><b>Book ID</b></th>
-                            <th scope="col"><b>BookName</b></th>
-                            <th scope="col"><b>Author</b></th>
-                            <th scope="col"><b>Publisher</b></th>
-                            <th scope="col"><b>Genre</b></th>
-                            <th scope="col"><b>Price</b></th>
-                            <th scope="col"><b>Status</b></th>
-                      </tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Product</b></th>
+                            <th scope="col"><b>Qty sold</b></th>
+                            <th scope="col"><b>Amount</b></th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {% for row in record %}
-                            <tr>
-                                <th scope="row">{{ row[0] }}</th>
-                                <td><b>{{ row[1] }}</b></td>
-                                <td><b>{{ row[2] }}</b></td>
-                                <td><b>{{ row[3] }}</b></td>
-                                <td><b>{{ row[4] }}</b></td>
-                                <td><b>{{ row[5] }}</b></td>
-                                <td><b>{{ row[6] }}</b></td>
-                            </tr>
-                        {% endfor %}
+                    {% for row in record[0] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>                    
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
-            </div>      
-        </center>
-        <script>
-          function SearchFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-          
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                  txtValue = td.textContent || td.innerText;
-                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                  } else {
-                    tr[i].style.display = "none";
-                  }
+    
+            </div>
+        </div>
+
+        <div id="cat2">
+            <h2 style="color: white;">Cleaning and Household</h2>
+            <div >
+    
+                <table class="table table-hover" style='width: 700px;'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Product</b></th>
+                            <th scope="col"><b>Qty sold</b></th>
+                            <th scope="col"><b>Amount</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in record[1] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>                    
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="cat3">
+            <h2 style="color: white;">Grocery</h2>
+            <div >
+    
+                <table class="table table-hover" style='width: 700px;'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Product</b></th>
+                            <th scope="col"><b>Qty sold</b></th>
+                            <th scope="col"><b>Amount</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in record[2] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>                    
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+    
+            </div>
+        </div>
+
+        <div id="cat4">
+            <h2 style="color: white;">Packaged foods</h2>
+            <div >
+    
+                <table class="table table-hover" style='width: 700px;'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Product</b></th>
+                            <th scope="col"><b>Qty sold</b></th>
+                            <th scope="col"><b>Amount</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in record[3] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>                    
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="cat5">
+            <h2 style="color: white;">Personal care</h2>
+            <div >
+    
+                <table class="table table-hover" style='width: 700px;'>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><b>Product ID</b></th>
+                            <th scope="col"><b>Product</b></th>
+                            <th scope="col"><b>Qty sold</b></th>
+                            <th scope="col"><b>Amount</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in record[4] %}
+                        <tr>
+                        <th scope="row">{{ row[0] }}</th>
+                        <td><b>{{ row[1] }}</b></td>
+                        <td><b>{{ row[2] }}</b></td>
+                        <td><b>{{ row[3] }}</b></td>                    
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </center>
+
+    <script>
+        var radios = document.getElementsByName("radio");
+        var cat1 = document.getElementById("cat1");
+        var cat2 = document.getElementById("cat2");
+        var cat3 = document.getElementById("cat3");
+        var cat4 = document.getElementById("cat4");
+        var cat5 = document.getElementById("cat5"); 
+
+        cat1.style.display = 'block';
+        cat2.style.display = 'none';
+        cat3.style.display = 'none';
+        cat4.style.display = 'none';
+        cat5.style.display = 'none';
+
+        for(var i = 0; i < radios.length; i++) {
+            radios[i].onclick = function() {
+                var val = this.value;
+                if(val == 'radio1'){  
+                    cat1.style.display = 'block';
+                    cat2.style.display = 'none';
+                    cat3.style.display = 'none';
+                    cat4.style.display = 'none';
+                    cat5.style.display = 'none';
                 }
-              }
+                else if(val == 'radio2'){
+                    cat1.style.display = 'none';
+                    cat2.style.display = 'block';
+                    cat3.style.display = 'none';
+                    cat4.style.display = 'none';
+                    cat5.style.display = 'none';
+                }   
+                else if(val == 'radio3'){
+                    cat1.style.display = 'none';
+                    cat2.style.display = 'none';
+                    cat3.style.display = 'block';
+                    cat4.style.display = 'none';
+                    cat5.style.display = 'none';
+                }
+                else if(val == 'radio4'){
+                    cat1.style.display = 'none';
+                    cat2.style.display = 'none';
+                    cat3.style.display = 'none';
+                    cat4.style.display = 'block';
+                    cat5.style.display = 'none';
+                }
+                else if(val == 'radio5'){
+                    cat1.style.display = 'none';
+                    cat2.style.display = 'none';
+                    cat3.style.display = 'none';
+                    cat4.style.display = 'none';
+                    cat5.style.display = 'block';
+                }
             }
-          </script>
-    </body>
+        }
+   
+    </script>
+ 
+</body>
 </html>

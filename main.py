@@ -84,7 +84,23 @@ def bill_generate():
         rec = db.sales_bill_id(table1, table2, data1)
         bill_det = db.bill_details(table1)
         db.sales_delete(table1)
-        
         return render_template('bill.html', rec=rec, rec2=bill_det)
     return render_template('bill.html')
 
+@app.route('/sales_report')
+def sales_report():
+    table = 'Sales_mapping'
+    table2 = 'Products'
+    table3 = 'Category'
+    report = [[], [], [], [], []]
+    sales_data = db.fetch_sales_data()
+
+    for row in sales_data:
+        print(row)
+        cat_id = row[3]
+        ind = cat_id - 1
+        tup = (row[0], row[1], row[4], row[5])
+        report[ind].append(tup)
+        print(report)
+
+    return render_template('salesreport.html', record = list(report))

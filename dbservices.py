@@ -49,7 +49,7 @@ class dbservices:
             VALUES ('Personal care');''')
 
         except Exception as e:
-            print(e)
+            pass
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Products` (
             `Id` INT NOT NULL AUTO_INCREMENT,
@@ -173,7 +173,7 @@ class dbservices:
     def fetch_item_records(self, table_name, category):
 
         try:
-            select_query = (f"SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category_Id = '{category}'")
+            select_query = (f"SELECT Id, PName, Price, Stock, Description, Date FROM {table_name} WHERE Category_Id = '{category}'")
             self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchall()
         
@@ -271,3 +271,14 @@ class dbservices:
         except Exception as e:
             print(e)
         return 0
+
+    def fetch_sales_data(self):
+        fetch_query = (f'''SELECT product_id, pname, `Name`, cat.Id, Qty, Amount 
+        FROM sales_mapping AS sm, products AS pr, `category` AS cat
+        WHERE sm.Product_Id = pr.Id AND sm.Cat_Id = cat.Id; ''')
+        try:
+            self.dbcursor.execute(fetch_query)
+            sales_data = self.dbcursor.fetchall()
+            return sales_data
+        except Exception as e:
+            print(e)
