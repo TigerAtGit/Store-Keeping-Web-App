@@ -97,11 +97,9 @@ def sales_report():
     sales_data = db.fetch_sales_data()
 
     for row in sales_data:
-        print(row)
-        cat_id = row[3]
+        cat_id = row[2]
         ind = cat_id - 1
-        tup = (row[0], row[1], row[4], row[5])
+        tup = (row[0], row[1], row[3], row[4])
         report[ind].append(tup)
-        print(report)
 
     return render_template('salesreport.html', record = list(report))
