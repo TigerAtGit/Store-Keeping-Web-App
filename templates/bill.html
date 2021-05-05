@@ -122,21 +122,26 @@
                 <div class="table-responsive">
                     <table class="BookDetails">
                         <tr class="row1" >
-                            <th class="heading" colspan="4" style="font-size: large; padding-bottom: 0px;">E-MART BILL</th>
+                            <th class="heading" colspan="5" style="font-size: large; padding-bottom: 0px;">E-MART BILL</th>
                         </tr>
                         <tr class="row1" >
                             {% if rec2 %}
-                            <td class="heading" colspan="2" style="padding-bottom: 0px; padding-left: 0px; padding-right: 70px;">Bill No: {{ rec2[2] }}</th>
-                            <td class="heading" colspan="2" style="padding-bottom: 0px;">Date: {{ rec2[0] }}</th>
+                            <!-- <td class="heading" style="padding-bottom: 0px;"></th> -->
+                            <td class="heading" style="padding-bottom: 0px; padding-left: 0px;"><b>Bill No.</b> {{ rec2[2] }}</th>
+                                <td class="heading" colspan="1" style="padding-bottom: 0px; padding-left: 0px;"><b>Sale Id:</b> {{ rec2[3] }}</th>
+                            
+                                
+                            <td class="heading" colspan="3" style="padding-bottom: 0px;"><b>Date:</b> {{ rec2[0] }}</th>
                             {% endif %}
                         </tr>
                         <tr class="row1" >
-                            <th class="heading" colspan="4" style="padding: 0px;">----------------------------------------------------</th>
+                            <th class="heading" colspan="5" style="padding: 0px;">------------------------------------------------------------------</th>
                         </tr>
                         <tr class="row1" style="padding-top: 0px;">
-                            <th class="heading">Sale ID</th>
+                            <th class="heading">Product ID</th>
                             <th class="heading">Product Name</th>
                             <th class="heading">Quantity</th>
+                            <th class="heading">Price</th>
                             <th class="heading">Amount</th>
                             
                         </tr>
@@ -147,6 +152,7 @@
                             <td class="heading">{{ i[0] }}</td>
                             <td class="heading">{{ i[1] }}</td>
                             <td class="heading">{{ i[2] }}</td>
+                            <td class="heading">{{ i[4] }}</td>
                             <td class="heading">{{ i[3] }}</td>
                             
                         </tr>
@@ -154,14 +160,19 @@
                         {% endfor %}
 
                         <tr class="row1" >
-                            <th class="heading" colspan="4" style="padding: 0px;">----------------------------------------------------</th>
+                            <th class="heading" colspan="5" style="padding: 0px">------------------------------------------------------------------</th>
                         </tr>
                         
                         <tr class="row1" >
                             {% if rec2 %}
-                            <th class="heading" colspan="4" style="padding-top: 0px;">Total Amount:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <!-- <th class="heading" colspan="5" style="padding-top: 0px;">Total Amount:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                &nbsp&nbsp&nbsp&nbsp{{ rec2[1] }}</th>
+                                &nbsp&nbsp&nbsp&nbsp{{ rec2[1] }}</th> -->
+                                <th class="heading" colspan="2" style="padding-top: 0px;">Total Amount:</th>
+                            <td class="heading" style="padding-top: 0px;"></td>
+                            <td class="heading" style="padding-top: 0px;"></td>
+                            <th class="heading" style="padding-top: 0px;">{{ rec2[1] }}</th>
+                            
                             {% endif %}
                         </tr>
                         

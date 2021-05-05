@@ -119,7 +119,7 @@ class dbservices:
             select_query6 = (f"UPDATE {table_name1} SET Amount={tm} WHERE Bill_Id='{curr_bill_id}'")
             self.dbcursor.execute(select_query6)
 
-            select_query7 = (f"SELECT Sale_Id,PName,Qty,Amount FROM Products,{table_name2} WHERE Sale_Id='{curr_bill_id}' AND Product_Id=Id;")
+            select_query7 = (f"SELECT Id,PName,Qty,Amount,Price FROM Products,{table_name2} WHERE Sale_Id='{curr_bill_id}' AND Product_Id=Id;")
             self.dbcursor.execute(select_query7)
             records = self.dbcursor.fetchall()
             self.connector.commit()
@@ -169,7 +169,7 @@ class dbservices:
             date = str(final_amount[0][1])
             # date = date.split(' ')
             # date = date[0]
-            lst =[date,final_amount1, billno1]
+            lst =[date,final_amount1, billno1,curr_bill_id]
             
             return lst
         except Exception as e:
@@ -284,6 +284,12 @@ class dbservices:
         try:
             self.dbcursor.execute(fetch_query)
             sales_data = self.dbcursor.fetchall()
+            print(sales_data)
+            # select_query = (f'''SELECT product_id, pname, `Name`, cat.Id, SUM(Qty), SUM(Amount)
+            #  FROM {sales_data} WHERE product_id=product_id''')
+            # self.dbcursor.execute(select_query)
+            # sales_data1 = self.dbcursor.fetchall()
+            print(sales_data)
             return sales_data
         except Exception as e:
             print(e)
