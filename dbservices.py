@@ -12,7 +12,7 @@ class dbservices:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
         self.dbcursor.execute('USE Storekeeping')
@@ -278,9 +278,9 @@ class dbservices:
         return 0
 
     def fetch_sales_data(self):
-        fetch_query = (f'''SELECT product_id, pname, `Name`, cat.Id, Qty, Amount 
-        FROM sales_mapping AS sm, products AS pr, `category` AS cat
-        WHERE sm.Product_Id = pr.Id AND sm.Cat_Id = cat.Id; ''')
+        fetch_query = (f'''SELECT DISTINCT (product_id), Pname, Cat_id, Sum(Qty), SUM(amount) 
+        FROM sales_mapping AS sm, products AS pr, category AS cat WHERE sm.Product_Id = pr.Id AND sm.Cat_Id = cat.Id GROUP
+        BY product_id ORDER BY product_id;''')
         try:
             self.dbcursor.execute(fetch_query)
             sales_data = self.dbcursor.fetchall()
