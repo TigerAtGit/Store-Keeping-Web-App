@@ -12,12 +12,13 @@ class dbservices:
         self.create_table()
     
     def connect_database(self):
+        '''connecting to database'''
         self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
-
         self.dbcursor = self.connector.cursor()
         self.dbcursor.execute('USE Storekeeping')
 
     def create_table(self):
+        '''creating tables of database if not created already'''
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Admin`(
             `Id` INT NOT NULL AUTO_INCREMENT,
@@ -86,9 +87,10 @@ class dbservices:
 
         self.connector.commit()
 
-
     
     def sales_bill_id(self, table_name1, table_name2, val):
+        '''function to modify database whenever a billing occurs
+        resulting change in stock, sales table and sale-product mapping'''
         
         try:
             select_query1 = (f"UPDATE Products SET Stock=Stock-{ val[1] } WHERE Id='{ val[0] }'")
@@ -128,7 +130,9 @@ class dbservices:
         except Exception as e:
             print(e)
 
+
     def sales_entering(self, table_name):
+        '''to update and record the sale'''
         
         try:
             sales_date = datetime.now()
@@ -140,6 +144,7 @@ class dbservices:
             
 
     def sales_delete(self, table_name):
+        '''to delete a sale related to empty bill'''
         
         try:
             select_query = (f"DELETE FROM {table_name} WHERE Amount='0'")
@@ -150,6 +155,8 @@ class dbservices:
 
 
     def bill_details(self, table_name):
+        '''to fetch bill details of a particular sale'''
+
         try:
             select_query3 = (f'SELECT Bill_id FROM {table_name}')
             self.dbcursor.execute(select_query3)
@@ -167,29 +174,28 @@ class dbservices:
             final_amount = self.dbcursor.fetchall()
             final_amount1 = final_amount[0][0]
             date = str(final_amount[0][1])
-            # date = date.split(' ')
-            # date = date[0]
-            lst =[date,final_amount1, billno1,curr_bill_id]
-            
+            lst =[date,final_amount1, billno1,curr_bill_id] 
             return lst
         except Exception as e:
             print(e)
-        
+
+
     def fetch_item_records(self, table_name, category):
+        '''to fetch list of products from database'''
 
         try:
             select_query = (f"SELECT Id, PName, Price, Stock, Description, Date FROM {table_name} WHERE Category_Id = '{category}'")
             self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchall()
-        
             return records
         except Exception as e:
             print(e)
 
 
     def add_record(self, table_name, input_data):
+        '''to add product in the stock'''
+
         keys = list(input_data.keys())
-        
         #Preparing Query
         table_data, table_values = '(', ' VALUES ('
         for i, x in enumerate(keys):
@@ -210,7 +216,10 @@ class dbservices:
         except Exception as e:
             print(e)
 
+
     def delete_record(self, table_name, id):
+        '''to delete a particular record from database'''
+
         delete_query = (f"DELETE FROM {table_name} WHERE Id = %(id)s")
         print(delete_query)
         try:
@@ -219,34 +228,11 @@ class dbservices:
         except Exception as e:
             print(e)
 
-    def fetch_records(self, table_name):
-        select_query = (f'SELECT * FROM {table_name}')
-
-        self.dbcursor.execute(select_query)
-        records = self.dbcursor.fetchall()
-        return records
-
-    def update_record(self, table_name, Id, updated_data):
-        set_values = ''
-
-        for i, columns in enumerate(updated_data.keys()):
-            if i != len(updated_data.keys())-1:
-                set_values += f'{columns} = %({columns})s,'
-            else:
-                set_values += f'{columns} = %({columns})s WHERE Id = %(Id)s'
-        
-        updated_data['Id'] = Id
-        update_query = (f'UPDATE {table_name} SET '+ set_values)
-        print(update_query)
-        try:
-            self.dbcursor.execute(update_query, updated_data)
-            self.connector.commit()
-        except Exception as e:
-            print(' *** Updation Failed *** \n', e)
 
     def fetch_column_data(self, table_name, columns, condition_name=None, condition_value=None):
-        fetch_query = 'SELECT '
+        '''to fetch column data from database'''
 
+        fetch_query = 'SELECT '
         for i,column in enumerate(columns):
             if i < len(columns)-1:
                 fetch_query += f'{column}, '
@@ -263,7 +249,10 @@ class dbservices:
 
         return columns_data
 
+
     def signin_admin(self, table_name, input_data):
+        '''to check admin credentials and verify it from database'''
+
         pwd = (f"SELECT Username FROM {table_name} WHERE Password = %(paswd)s")
         paswd = input_data["Password"]
         try:
@@ -277,18 +266,16 @@ class dbservices:
             print(e)
         return 0
 
+
     def fetch_sales_data(self):
+        '''to fetch sale data from multiple tables from database'''
+
         fetch_query = (f'''SELECT DISTINCT (product_id), Pname, Cat_id, Sum(Qty), SUM(amount) 
         FROM sales_mapping AS sm, products AS pr, category AS cat WHERE sm.Product_Id = pr.Id AND sm.Cat_Id = cat.Id GROUP
         BY product_id ORDER BY product_id;''')
         try:
             self.dbcursor.execute(fetch_query)
             sales_data = self.dbcursor.fetchall()
-            print(sales_data)
-            # select_query = (f'''SELECT product_id, pname, `Name`, cat.Id, SUM(Qty), SUM(Amount)
-            #  FROM {sales_data} WHERE product_id=product_id''')
-            # self.dbcursor.execute(select_query)
-            # sales_data1 = self.dbcursor.fetchall()
             print(sales_data)
             return sales_data
         except Exception as e:

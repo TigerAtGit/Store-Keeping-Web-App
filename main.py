@@ -5,8 +5,11 @@ from datetime import timedelta
 
 app  = Flask(__name__)
 app.secret_key = "super_secret_key"
-
 db = dbservices()
+
+# route() decorator to tell Flask what URL should trigger our function
+# The function is given a name which is also used to generate URLs for 
+# that particular function, and returns the html page we want to display in the browser
 
 @app.route('/', methods = ['POST', 'GET'])
 def signinpage():

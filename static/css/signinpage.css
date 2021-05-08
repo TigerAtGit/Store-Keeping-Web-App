@@ -1,14 +1,16 @@
 .col-md-4 col-md-offset-4{
     text-align:center;
 }
+
 .container{
     border-color: black;
     font-size: 40px;
     border: 4px solid black;
     background-color: rgb(241, 185, 133);
 
-  }
-  h1 {
+}
+
+h1 {
     text-align: center;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: bold;

@@ -71,12 +71,9 @@
                         </tr>
                         <tr class="row1" >
                             {% if rec2 %}
-                            <!-- <td class="heading" style="padding-bottom: 0px;"></th> -->
-                            <td class="heading" style="padding-bottom: 0px; padding-left: 0px;"><b>Bill No.</b> {{ rec2[2] }}</th>
-                                <td class="heading" colspan="1" style="padding-bottom: 0px; padding-left: 0px;"><b>Sale Id:</b> {{ rec2[3] }}</th>
-                            
-                                
-                            <td class="heading" colspan="3" style="padding-bottom: 0px;"><b>Date:</b> {{ rec2[0] }}</th>
+                                <td class="heading" style="padding-bottom: 0px; padding-left: 0px;"><b>Bill No.</b> {{ rec2[2] }}</th>
+                                <td class="heading" colspan="1" style="padding-bottom: 0px; padding-left: 0px;"><b>Sale Id:</b> {{ rec2[3] }}</th> 
+                                <td class="heading" colspan="3" style="padding-bottom: 0px;"><b>Date:</b> {{ rec2[0] }}</th>
                             {% endif %}
                         </tr>
                         <tr class="row1" >
@@ -110,20 +107,15 @@
                         
                         <tr class="row1" >
                             {% if rec2 %}
-                            <!-- <th class="heading" colspan="5" style="padding-top: 0px;">Total Amount:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                &nbsp&nbsp&nbsp&nbsp{{ rec2[1] }}</th> -->
                                 <th class="heading" colspan="2" style="padding-top: 0px;">Total Amount:</th>
-                            <td class="heading" style="padding-top: 0px;"></td>
-                            <td class="heading" style="padding-top: 0px;"></td>
-                            <th class="heading" style="padding-top: 0px;">{{ rec2[1] }}</th>
-                            
+                                <td class="heading" style="padding-top: 0px;"></td>
+                                <td class="heading" style="padding-top: 0px;"></td>
+                                <th class="heading" style="padding-top: 0px;">{{ rec2[1] }}</th>
                             {% endif %}
                         </tr>
                         
                     </table>
-                </div><br>
-                
+                </div><br>           
                 <br>
                 <br>
             </div>
